@@ -13,11 +13,22 @@ const NavBar = () => {
   }), []);
 
   return (
-    <Navbar bg="light" expand="lg">
+    <Navbar bg="white" expand="lg">
       <Container>
         <Navbar.Brand as={NavLink} to="/">
-          <h2>meteor-application-template-react</h2>
+          <h2>HappeningAtManoa</h2>
         </Navbar.Brand>
+        <Nav className="me-auto justify-content-start">
+          <Nav.Link id="home-nav" as={NavLink} to="/" key="home">Home</Nav.Link>
+          <Nav.Link id="calendar-nav" as={NavLink} to="/calendar" key="calendar">Calendar</Nav.Link>
+          <Nav.Link id="thisweek-nav" as={NavLink} to="/thisweek" key="thisweek">This Week</Nav.Link>
+          <Nav.Link id="postevent-nav" as={NavLink} to="/postevent" key="postevent">Post an Event</Nav.Link>
+          {currentUser ? ([
+            <Nav.Link id="myevents-nav" as={NavLink} to="/myevents" key="myevent">MyEvents</Nav.Link>
+          ]) : (
+            <Nav.Link id="myevents-nav" as={NavLink} to="/signin" key="myevent">MyEvents</Nav.Link>
+          )}
+        </Nav>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto justify-content-start">
