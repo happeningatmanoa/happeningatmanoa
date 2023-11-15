@@ -15,57 +15,56 @@ const NavBar = () => {
   return (
     <Navbar bg="white" expand="lg">
       <Container>
-        <Navbar.Brand as={NavLink} to="/">
-          <h2>HappeningAtManoa</h2>
-        </Navbar.Brand>
-        <Nav className="me-auto justify-content-start">
-          <Nav.Link id="home-nav" as={NavLink} to="/" key="home">Home</Nav.Link>
-          <Nav.Link id="calendar-nav" as={NavLink} to="/calendar" key="calendar">Calendar</Nav.Link>
-          <Nav.Link id="thisweek-nav" as={NavLink} to="/thisweek" key="thisweek">This Week</Nav.Link>
-          <Nav.Link id="postevent-nav" as={NavLink} to="/postevent" key="postevent">Post an Event</Nav.Link>
-          {currentUser ? ([
-            <Nav.Link id="myevents-nav" as={NavLink} to="/myevents" key="myevent">MyEvents</Nav.Link>
-          ]) : (
-            <Nav.Link id="myevents-nav" as={NavLink} to="/signin" key="myevent">MyEvents</Nav.Link>
-          )}
-        </Nav>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto justify-content-start">
-            {currentUser ? ([
-              <Nav.Link id="add-stuff-nav" as={NavLink} to="/add" key="add">Add Stuff</Nav.Link>,
-              <Nav.Link id="list-stuff-nav" as={NavLink} to="/list" key="list">List Stuff</Nav.Link>,
-            ]) : ''}
-            {Roles.userIsInRole(Meteor.userId(), 'admin') ? (
-              <Nav.Link id="list-stuff-admin-nav" as={NavLink} to="/admin" key="admin">Admin</Nav.Link>
-            ) : ''}
-          </Nav>
-          <Nav className="justify-content-end">
-            {currentUser === '' ? (
-              <NavDropdown id="login-dropdown" title="Login">
-                <NavDropdown.Item id="login-dropdown-sign-in" as={NavLink} to="/signin">
-                  <PersonFill />
-                  Sign
-                  in
-                </NavDropdown.Item>
-                <NavDropdown.Item id="login-dropdown-sign-up" as={NavLink} to="/signup">
-                  <PersonPlusFill />
-                  Sign
-                  up
-                </NavDropdown.Item>
-              </NavDropdown>
-            ) : (
-              <NavDropdown id="navbar-current-user" title={currentUser}>
-                <NavDropdown.Item id="navbar-sign-out" as={NavLink} to="/signout">
-                  <BoxArrowRight />
-                  {' '}
-                  Sign
-                  out
-                </NavDropdown.Item>
-              </NavDropdown>
-            )}
-          </Nav>
-        </Navbar.Collapse>
+          <Navbar.Brand as={NavLink} to="/"><h2>HappeningAtManoa</h2></Navbar.Brand>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="me-auto justify-content-end ms-5">
+              <Nav.Link id="home-nav" as={NavLink} to="/" key="home">Home</Nav.Link>
+              <Nav.Link id="calendar-nav" as={NavLink} to="/calendar" key="calendar">Calendar</Nav.Link>
+              <Nav.Link id="thisweek-nav" as={NavLink} to="/thisweek" key="thisweek">This Week</Nav.Link>
+              <Nav.Link id="postevent-nav" as={NavLink} to="/postevent" key="postevent">Post an Event</Nav.Link>
+              {currentUser ? ([
+                <Nav.Link id="myevents-nav" as={NavLink} to="/myevents" key="myevent">MyEvents</Nav.Link>
+              ]) : (
+                  <Nav.Link id="myevents-nav" as={NavLink} to="/signin" key="myevent">MyEvents</Nav.Link>
+              )}
+              {currentUser ? ([
+                <Nav.Link id="add-stuff-nav" as={NavLink} to="/add" key="add">Add Stuff</Nav.Link>,
+                <Nav.Link id="list-stuff-nav" as={NavLink} to="/list" key="list">List Stuff</Nav.Link>,
+              ]) : ''}
+              {Roles.userIsInRole(Meteor.userId(), 'admin') ? (
+                  <Nav.Link id="list-stuff-admin-nav" as={NavLink} to="/admin" key="admin">Admin</Nav.Link>
+              ) : ''}
+              <Nav.Link id="contact-nav" as={NavLink} to="/contact" key="contact">Contact Us</Nav.Link>
+            </Nav>
+          </Navbar.Collapse>
+
+          <Navbar.Collapse>
+              <Nav className="justify-content-end">
+                  {currentUser === '' ? (
+                      <NavDropdown id="login-dropdown" title="Login">
+                          <NavDropdown.Item id="login-dropdown-login" as={NavLink} to="/signin">
+                              <PersonFill />
+                              {' '}Login
+                          </NavDropdown.Item>
+                          <NavDropdown.Item id="login-dropdown-register" as={NavLink} to="/signup">
+                              <PersonPlusFill />
+                              {' '}Register
+                          </NavDropdown.Item>
+                      </NavDropdown>
+                  ) : (
+                      <NavDropdown id="navbar-current-user" title={currentUser}>
+                          <NavDropdown.Item id="navbar-sign-out" as={NavLink} to="/signout">
+                              <BoxArrowRight />
+                              {' '}
+                              Sign
+                              out
+                          </NavDropdown.Item>
+                      </NavDropdown>
+                  )}
+              </Nav>
+          </Navbar.Collapse>
+
       </Container>
     </Navbar>
   );
