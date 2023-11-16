@@ -10,14 +10,14 @@ const SelectSearch = ({title}) => {
 
     // TODO: pull data from database rather than hardcoded
     const categoryArray = ['Concerts', 'Sports', 'Activities', 'Educational'];
-    const locationArray = ['Campus Center', 'RISE Co-Working', 'Frear Dorms', 'Shidler College of Business']
+    const locationArray = ['Campus Center', 'RISE Co-Working', 'T.C Ching Field', 'Shidler College of Business']
 
     return(
         <header>
 
                 <div
                     className="p-5 text-center bg-image"
-                    style={{ backgroundImage: "url('/images/landing-page-banner-1.png')", height: '50vh', backgroundSize: "cover" }}
+                    style={{ backgroundImage: "url('/images/landing-page-banner-1.png')", height: '30vh', backgroundSize: "cover" }}
                 >
                     <h1 style={{ color: 'white' }} className="pt-5"><b>{title.toUpperCase()}</b></h1>
                     <div className="pt-5">
