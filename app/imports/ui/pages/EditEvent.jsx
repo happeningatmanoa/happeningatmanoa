@@ -55,7 +55,9 @@ const EditEvent = () => {
                 <DateField name="startDate" />
                 <DateField name="endDate" />
                 <TextField name="link" placeholder="Link to Event Page"/>
-                <TextField name="orgEmail" placeholder="Organization's Contact E-Mail"/>                <SubmitField value="Submit" />
+                <TextField name="orgEmail" placeholder="Organization's Contact E-Mail"/>
+                // Insert Field-CodeBlock when upload implementation is found for thumbnail and image(s)
+                <SubmitField value="Submit" />
                 <ErrorsField />
               </Card.Body>
             </Card>

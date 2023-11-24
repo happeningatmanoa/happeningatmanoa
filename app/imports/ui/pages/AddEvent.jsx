@@ -22,6 +22,9 @@ const formSchema = new SimpleSchema({
   endDate: String,
   link: String,
   orgEmail: String,
+  /* Insert thumbnail value here when upload implementation exists
+  Insert image value(s) here when upload implementation exists
+   */
 });
 
 const bridge = new SimpleSchema2Bridge(formSchema);
@@ -65,6 +68,7 @@ const AddEvent   = () => {
                 <DateField name="endDate" />
                 <TextField name="link" placeholder="Link to Event Page"/>
                 <TextField name="orgEmail" placeholder="Organization's Contact E-Mail"/>
+                // Insert Field-CodeBlock when upload implementation is found for thumbnail and image(s)
                 <SubmitField value="Submit" />
                 <ErrorsField />
               </Card.Body>
@@ -75,9 +79,5 @@ const AddEvent   = () => {
     </Container>
   );
 };
-
-//AddEvent.propTypes = {
-  //orgName: PropTypes.string.isRequired,
-//};
 
 export default AddEvent;
