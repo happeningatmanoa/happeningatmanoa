@@ -35,6 +35,13 @@ const SignUp = ({ location }) => {
 
   /* Display the signup form. Redirect to add page after successful registration and login. */
   const { from } = location?.state || { from: { pathname: '/add' } };
+  function emailValidation(email) {
+    const domain = 'hawaii.edu';
+    const emailArr = email.split('@');
+    if (emailArr.length === 2) { return false; }
+    if (emailArr[1] === domain) { return true; }
+    return false;
+  }
   // if correct authentication, redirect to from: page instead of signup screen
   if (redirectToReferer) {
     return <Navigate to={from} />;
@@ -49,7 +56,7 @@ const SignUp = ({ location }) => {
           <AutoForm schema={bridge} onSubmit={data => submit(data)}>
             <Card>
               <Card.Body>
-                <TextField name="email" placeholder="E-mail address" />
+                <TextField name="email" placeholder="hawaii.edu e-mail address" />
                 <TextField name="password" placeholder="Password" type="password" />
                 <ErrorsField />
                 <SubmitField />
