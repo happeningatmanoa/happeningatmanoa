@@ -21,8 +21,9 @@ import LoadingSpinner from '../components/LoadingSpinner';
 import MyEvents from '../pages/MyEvents';
 import AboutUs from '../pages/AboutUs';
 // =======
-import ContactUs from './app/imports/ui/pages/ContactUs';
+//import ContactUs from './app/imports/ui/pages/ContactUs';
 // >>>>>>> issue-09
+import ContactUs from '../pages/ContactUs';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
 const App = () => {
