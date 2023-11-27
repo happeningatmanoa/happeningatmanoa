@@ -13,24 +13,24 @@ const Footer = () => (
           <b>Quick Links</b>
           {' '}
           <br />
-          <a href="/" style={{ textDecoration: "none", color: "inherit"}}>Home</a>
+          <a href="/" style={{ textDecoration: 'none', color: 'inherit' }}>Home</a>
           <br />
-          <a href="/calendar" style={{ textDecoration: "none", color: "inherit"}}>Calendar</a>
+          <a href="/calendar" style={{ textDecoration: 'none', color: 'inherit' }}>Calendar</a>
           {' '}
           <br />
-          <a href="/thisweek" style={{ textDecoration: "none", color: "inherit"}}>This Week</a>
+          <a href="/thisweek" style={{ textDecoration: 'none', color: 'inherit' }}>This Week</a>
           <br />
-          <a href="/postevent" style={{ textDecoration: "none", color: "inherit"}}>Post an Event</a>
+          <a href="/postevent" style={{ textDecoration: 'none', color: 'inherit' }}>Post an Event</a>
         </Col>
         <Col sm={1}>
           <b>The Team</b>
           {' '}
           <br />
-          <a href="https://www.github.com/happeningatmanoa" style={{ textDecoration: "none", color: "inherit"}}>Github</a>
+          <a href="https://www.github.com/happeningatmanoa" style={{ textDecoration: 'none', color: 'inherit' }}>Github</a>
           <br />
-          <a href="https://www.happeningatmanoa.github.io" style={{ textDecoration: "none", color: "inherit"}}>About Us</a>
+          <a href="https://www.happeningatmanoa.github.io" style={{ textDecoration: 'none', color: 'inherit' }}>About Us</a>
           <br />
-          <a href="/contactus" style={{ textDecoration: "none", color: "inherit"}}>Contact Us</a>
+          <a href="/contactus" style={{ textDecoration: 'none', color: 'inherit' }}>Contact Us</a>
         </Col>
       </Row>
     </Container>
