@@ -9,7 +9,7 @@ import { useParams } from 'react-router';
 import { Events } from '../../api/event/Event';
 import LoadingSpinner from '../components/LoadingSpinner';
 
-const bridge = new SimpleSchema2Bridge(Stuffs.schema);
+const bridge = new SimpleSchema2Bridge(Events.schema);
 
 /* Renders the EditStuff page for editing a single document. */
 const EditEvent = () => {
@@ -32,12 +32,13 @@ const EditEvent = () => {
   // console.log('EditStuff', doc, ready);
   // On successful submit, insert the data.
   const submit = (data) => {
-    const { name, quantity, condition } = data;
+    const { orgName, eventName, location, venue, category, rsvp, startDate, endDate, link, orgEmail } = data;
     Events.collection.update(_id, { $set: { orgName, eventName, location, venue, category, rsvp, startDate, endDate, link, orgEmail } }, (error) => (error ?
       swal('Error', error.message, 'error') :
       swal('Success', 'Event updated successfully', 'success')));
   };
 
+  // Insert Field-CodeBlock below when upload implementation is found for thumbnail and image(s)
   return ready ? (
     <Container className="py-3">
       <Row className="justify-content-center">
@@ -46,17 +47,16 @@ const EditEvent = () => {
           <AutoForm schema={bridge} onSubmit={data => submit(data)} model={doc}>
             <Card>
               <Card.Body>
-                <TextField name="orgName" placeholder="Organization's Name"/>
-                <TextField name="eventName" placeholder="Event's Name"/>
-                <TextField name="location" placeholder="Location"/>
-                <TextField name="venue" placeholder="Venue"/>
+                <TextField name="orgName" placeholder="Organization's Name" />
+                <TextField name="eventName" placeholder="Event's Name" />
+                <TextField name="location" placeholder="Location" />
+                <TextField name="venue" placeholder="Venue" />
                 <SelectField name="category" />
                 <BoolField name="rsvp" />
                 <DateField name="startDate" />
                 <DateField name="endDate" />
-                <TextField name="link" placeholder="Link to Event Page"/>
-                <TextField name="orgEmail" placeholder="Organization's Contact E-Mail"/>
-                // Insert Field-CodeBlock when upload implementation is found for thumbnail and image(s)
+                <TextField name="link" placeholder="Link to Event Page" />
+                <TextField name="orgEmail" placeholder="Organization's Contact E-Mail" />
                 <SubmitField value="Submit" />
                 <ErrorsField />
               </Card.Body>
