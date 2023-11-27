@@ -52,6 +52,14 @@ const Calendar = () => {
   }
   weeks.push(currentWeek);
 
+  const cellStyle = {
+    width: '8em', // 100% / 7
+    paddingBottom: '10em', // Maintain a square aspect ratio
+    textAlign: 'center',
+    verticalAlign: 'middle',
+    border: '1px solid #ccc',
+  };
+
 
   return (
     <Container>
@@ -59,7 +67,7 @@ const Calendar = () => {
         <h1>{months[currentMonth]} {currentYear} Calendar</h1>
       </Row>
       <Row>
-        <Table bordered>
+        <Table bordered responsive>
           <thead>
             <tr>
               <th>Sun</th>
@@ -78,6 +86,7 @@ const Calendar = () => {
                   <td
                     key={dayIndex}
                     style={{
+                      ...cellStyle,
                       backgroundColor: date && date.toDateString() === today.toDateString() ? '#ffffcc' : 'inherit',
                       fontWeight: date && date.toDateString() === today.toDateString() ? 'bold' : 'normal',
                     }}
