@@ -16,7 +16,7 @@ class EventsCollection {
       eventName: String,
       location: String,
       venue: String,
-      category:  {
+      category: {
         type: String,
         allowedValues: ['Informational', 'Cultural', 'Job Faire', 'Music', 'Miscellaneous'],
         defaultValue: 'Miscellaneous',
@@ -28,8 +28,11 @@ class EventsCollection {
       orgEmail: String,
       thumbnail: String,
       images: {
-        type: [String],
+        type: Array,
         minCount: 1,
+      },
+      'images.$': {
+        type: String,
       },
     });
     // Attach the schema to the collection, so all attempts to insert a document are checked against schema.
