@@ -18,7 +18,7 @@ const ContactUs = () => (
       <h3 className="pt-4 text-center">Questions? Email Us!</h3>
       <Row className="p-3">
         <Col className="text-center">
-          <h4><a href="alee91@hawaii.edu">Anthony Lee</a></h4>
+          <h4><a href="mailto:alee91@hawaii.edu">Anthony Lee</a></h4>
         </Col>
         <Col className="text-center">
           <h4><a href="leahyana@hawaii.edu">Leah Yanagisawa</a></h4>
