@@ -16,7 +16,7 @@ class EventsCollection {
       eventName: String,
       location: String,
       venue: String,
-      category: {
+      category:  {
         type: String,
         allowedValues: ['Informational', 'Cultural', 'Job Faire', 'Music', 'Miscellaneous'],
         defaultValue: 'Miscellaneous',
