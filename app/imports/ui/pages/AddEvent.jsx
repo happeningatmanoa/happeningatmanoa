@@ -22,13 +22,16 @@ const formSchema = new SimpleSchema({
   endDate: String,
   link: String,
   orgEmail: String,
+  
+  /* Insert thumbnail value here when upload implementation exists
+  Insert image value(s) here when upload implementation exists
+   */
 });
 
 const bridge = new SimpleSchema2Bridge(formSchema);
 
 /* Renders the AddStuff page for adding a document. */
-const AddEvent   = () => {
-
+const AddEvent = () => {
   // On submit, insert the data.
   const submit = (data, formRef) => {
     const { orgName, eventName, location, venue, category, rsvp, startDate, endDate, link, orgEmail } = data;
@@ -47,6 +50,8 @@ const AddEvent   = () => {
 
   // Render the form. Use Uniforms: https://github.com/vazco/uniforms
   let fRef = null;
+  // Insert Field-CodeBlock below when upload implementation is found for thumbnail and image(s)
+
   return (
     <Container className="py-3">
       <Row className="justify-content-center">
@@ -63,8 +68,8 @@ const AddEvent   = () => {
                 <BoolField name="rsvp" />
                 <DateField name="startDate" />
                 <DateField name="endDate" />
-                <TextField name="link" placeholder="Link to Event Page"/>
-                <TextField name="orgEmail" placeholder="Organization's Contact E-Mail"/>
+                <TextField name="link" placeholder="Link to Event Page" />
+                <TextField name="orgEmail" placeholder="Organization's Contact E-Mail" />
                 <SubmitField value="Submit" />
                 <ErrorsField />
               </Card.Body>
@@ -75,9 +80,5 @@ const AddEvent   = () => {
     </Container>
   );
 };
-
-//AddEvent.propTypes = {
-  //orgName: PropTypes.string.isRequired,
-//};
 
 export default AddEvent;
