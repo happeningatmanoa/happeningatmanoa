@@ -8,8 +8,7 @@ import Footer from '../components/Footer';
 import Landing from '../pages/Landing';
 import ListStuff from '../pages/ListStuff';
 import ListStuffAdmin from '../pages/ListStuffAdmin';
-import AddStuff from '../pages/AddStuff';
-import EditStuff from '../pages/EditStuff';
+import AddEvent from '../pages/AddEvent';
 import NotFound from '../pages/NotFound';
 import SignUp from '../pages/SignUp';
 import SignOut from '../pages/SignOut';
@@ -17,12 +16,9 @@ import NavBar from '../components/NavBar';
 import SignIn from '../pages/SignIn';
 import NotAuthorized from '../pages/NotAuthorized';
 import LoadingSpinner from '../components/LoadingSpinner';
-// <<<<<< HEAD
+import EditEvent from '../pages/EditEvent';
 import MyEvents from '../pages/MyEvents';
 import AboutUs from '../pages/AboutUs';
-// =======
-//import ContactUs from './app/imports/ui/pages/ContactUs';
-// >>>>>>> issue-09
 import ContactUs from '../pages/ContactUs';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
@@ -45,6 +41,8 @@ const App = () => {
           <Route path="/about" element={<AboutUs />} />
           <Route path="/home" element={<ProtectedRoute><Landing /></ProtectedRoute>} />
           <Route path="/list" element={<ProtectedRoute><ListStuff /></ProtectedRoute>} />
+          <Route path="/add" element={<ProtectedRoute><AddEvent /></ProtectedRoute>} />
+          <Route path="/edit/:_id" element={<ProtectedRoute><EditEvent /></ProtectedRoute>} />
           <Route path="/add" element={<ProtectedRoute><AddStuff /></ProtectedRoute>} />
           <Route path="/contact" element={<ProtectedRoute><ContactUs /></ProtectedRoute>} />
           <Route path="/edit/:_id" element={<ProtectedRoute><EditStuff /></ProtectedRoute>} />
