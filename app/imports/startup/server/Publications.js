@@ -13,10 +13,8 @@ Meteor.publish(Stuffs.userPublicationName, function () {
   return this.ready();
 });
 
-// Publishes events for any user, signed in or not.
-Meteor.publish(Events.userPublicationName, function () {
-  return this.ready();
-});
+// Publishes all events for any user, signed in or not.
+Meteor.publish(Events.userPublicationName, () => Events.collection.find());
 
 // Admin-level publication.
 // If logged in and with admin role, then publish all documents from all users. Otherwise, publish nothing.
