@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Roles } from 'meteor/alanning:roles';
 import { Stuffs } from '../../api/stuff/Stuff';
+import { Events } from '../../api/event/Event';
 
 // User-level publication.
 // If logged in, then publish documents owned by this user. Otherwise, publish nothing.
@@ -9,6 +10,11 @@ Meteor.publish(Stuffs.userPublicationName, function () {
     const username = Meteor.users.findOne(this.userId).username;
     return Stuffs.collection.find({ owner: username });
   }
+  return this.ready();
+});
+
+// Publishes events for any user, signed in or not.
+Meteor.publish(Events.userPublicationName, function () {
   return this.ready();
 });
 
