@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Meteor } from 'meteor/meteor';
 import { Col, Container, Row, Form, Card, Button } from 'react-bootstrap';
 import { useTracker } from 'meteor/react-meteor-data';
-import { Stuffs } from '../../api/stuff/Stuff';
+import { Events } from '../../api/event/Event';
 import LoadingSpinner from '../components/LoadingSpinner';
 
 /* Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
@@ -12,18 +12,18 @@ const Search = () => {
     // Note that this subscription will get cleaned up
     // when your component is unmounted or deps change.
     // Get access to Stuff documents.
-    const subscription = Meteor.subscribe(Stuffs.userPublicationName);
+    const subscription = Meteor.subscribe(Events.userPublicationName);
     // Determine if the subscription is ready
     const rdy = subscription.ready();
     // Get the Stuff documents
-    const eventItems = Stuffs.collection.find({}).fetch();
+    const eventItems = Events.collection.find({}).fetch();
     return {
       events: eventItems,
       ready: rdy,
     };
   }, []);
 
-  const [filters, setFilters] = useState({ name: '', organization: '', location: '', venue: '', category: '', length: '' });
+  const [filters, setFilters] = useState({ orgName: '', eventName: '', location: '', venue: '', category: '', rsvp: null, startDate: null, endDate: null, link: '', orgEmail: '', images: '' });
   const [data, setData] = useState(events);
 
   const handleFilterChange = (e) => {
@@ -50,7 +50,7 @@ const Search = () => {
     }
   }, [ready, filters, events]);
   const resetFilters = () => {
-    setFilters({ name: '', organization: '', location: '', venue: '', category: '', length: '' });
+    setFilters({ orgName: '', eventName: '', location: '', venue: '', category: '', rsvp: null, startDate: null, endDate: null, link: '', orgEmail: '', images: '' });
     setData(events);
   };
 
@@ -66,9 +66,9 @@ const Search = () => {
               <Form.Control
                 className="mt-2"
                 type="text"
-                name="name"
+                name="eventName"
                 placeholder="Event Name"
-                value={filters.name}
+                value={filters.eventName}
                 onChange={handleFilterChange}
               />
             </Form.Group>
@@ -78,9 +78,9 @@ const Search = () => {
               <Form.Control
                 className="mt-2"
                 type="text"
-                name="services"
+                name="orgName"
                 placeholder="Organization"
-                value={filters.organization}
+                value={filters.orgName}
                 onChange={handleFilterChange}
               />
             </Form.Group>
@@ -98,26 +98,33 @@ const Search = () => {
           <Col>
             <Form.Select className="mt-2">
               <option>Venue</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
+              <option value="1">On-Campus</option>
+              <option value="2">Off-Campus</option>
             </Form.Select>
           </Col>
           <Col>
-            <Form.Select className="mt-2">
+            <Form.Select
+              className="mt-2"
+              name="category"
+              value={filters.category}
+              onChange={handleFilterChange}
+            >
               <option>Category</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
+              <option value="1">Informational</option>
+              <option value="2">Cultural</option>
+              <option value="3">Job Faire</option>
+              <option value="3">Music</option>
+              <option value="3">Miscellaneous</option>
             </Form.Select>
           </Col>
           <Col>
-            <Form.Select className="mt-2">
-              <option>Length</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
-            </Form.Select>
+            <Form.Control
+              className="mt-2"
+              type="date"
+              name="startDate"
+              value={filters.startDate}
+              onChange={handleFilterChange}
+            />
           </Col>
         </Row>
         <Button variant="secondary" className="mt-3" onClick={resetFilters}>Reset Filters</Button>
@@ -127,8 +134,9 @@ const Search = () => {
           <Col key={index} sm={6} md={4} lg={6} className="mb-4">
             <Card className="h-100 shadow grow-on-hover">
               <Card.Body style={{ color: 'black' }}>
-                <Card.Title className="h5">{item.name}</Card.Title>
+                <Card.Title><h1>{item.eventName}</h1></Card.Title>
                 <Card.Text>
+                  <h3>{item.orgName}</h3>
                   event info goes here
                 </Card.Text>
               </Card.Body>
