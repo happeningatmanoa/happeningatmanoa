@@ -21,8 +21,19 @@ const SignUp = ({ location }) => {
   const bridge = new SimpleSchema2Bridge(schema);
 
   /* Handle SignUp submission. Create user account and a profile entry, then redirect to the home page. */
+  function emailValidation(email) {
+    const domain = 'hawaii.edu';
+    const emailArr = email.split('@');
+    if (emailArr[1] === domain) { return true; }
+    return false;
+  }
   const submit = (doc) => {
     const { email, password } = doc;
+    if (!emailValidation(email)) {
+      setError('Please use a hawaii.edu email address');
+      return;
+    }
+
     Accounts.createUser({ email, username: email, password }, (err) => {
       if (err) {
         setError(err.reason);
@@ -35,6 +46,7 @@ const SignUp = ({ location }) => {
 
   /* Display the signup form. Redirect to add page after successful registration and login. */
   const { from } = location?.state || { from: { pathname: '/add' } };
+
   // if correct authentication, redirect to from: page instead of signup screen
   if (redirectToReferer) {
     return <Navigate to={from} />;
@@ -49,7 +61,7 @@ const SignUp = ({ location }) => {
           <AutoForm schema={bridge} onSubmit={data => submit(data)}>
             <Card>
               <Card.Body>
-                <TextField name="email" placeholder="E-mail address" />
+                <TextField name="email" placeholder="hawaii.edu e-mail address" />
                 <TextField name="password" placeholder="Password" type="password" />
                 <ErrorsField />
                 <SubmitField />
