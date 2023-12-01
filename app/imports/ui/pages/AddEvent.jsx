@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, Col, Container, Row } from 'react-bootstrap';
 import { AutoForm, BoolField, DateField, ErrorsField, SelectField, SubmitField, TextField } from 'uniforms-bootstrap5';
+import { connectField } from 'uniforms';
 import swal from 'sweetalert';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import SimpleSchema from 'simpl-schema';
@@ -17,26 +18,54 @@ const formSchema = new SimpleSchema({
     allowedValues: ['Informational', 'Cultural', 'Job Faire', 'Music', 'Miscellaneous'],
     defaultValue: 'Miscellaneous',
   },
-  rsvp: Boolean,
+  rsvp: {
+    type: Boolean,
+    defaultValue: false,
+  },
   startDate: Date,
   endDate: String,
   link: String,
   orgEmail: String,
-  
-  /* Insert thumbnail value here when upload implementation exists
-  Insert image value(s) here when upload implementation exists
-   */
+  thumbnail: String,
 });
 
 const bridge = new SimpleSchema2Bridge(formSchema);
+
+function Image({ onChange, value }) {
+  return (
+    <div className="ImageField">
+      <label htmlFor="file-input">
+        <div>Choose your Thumbnail</div>
+        <img
+        alt=""
+        src={value || 'https://picsum.photos/150?grayscale'}
+        style={{ cursor: 'pointer', width: '150px', height: '150px' }}
+        />
+      </label>
+      <input
+        accept="image/*"
+        id="file-input"
+        onChange={({ target: { files } }) => {
+          if (files && files[0]) {
+            onChange(URL.createObjectURL(files[0]));
+          }
+        }}
+        style={{ display: 'none' }}
+        type="file"
+      />
+    </div>
+  );
+}
+
+const ImageField = connectField(Image);
 
 /* Renders the AddStuff page for adding a document. */
 const AddEvent = () => {
   // On submit, insert the data.
   const submit = (data, formRef) => {
-    const { orgName, eventName, location, venue, category, rsvp, startDate, endDate, link, orgEmail } = data;
+    const { orgName, eventName, location, venue, category, rsvp, startDate, endDate, link, orgEmail, thumbnail } = data;
     Events.collection.insert(
-      { orgName, eventName, location, venue, category, rsvp, startDate, endDate, link, orgEmail },
+      { orgName, eventName, location, venue, category, rsvp, startDate, endDate, link, orgEmail, thumbnail },
       (error) => {
         if (error) {
           swal('Error', error.message, 'error');
@@ -70,6 +99,7 @@ const AddEvent = () => {
                 <DateField name="endDate" />
                 <TextField name="link" placeholder="Link to Event Page" />
                 <TextField name="orgEmail" placeholder="Organization's Contact E-Mail" />
+                <ImageField name="thumbnail" />
                 <SubmitField value="Submit" />
                 <ErrorsField />
               </Card.Body>

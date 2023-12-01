@@ -27,13 +27,6 @@ class EventsCollection {
       link: String,
       orgEmail: String,
       thumbnail: String,
-      images: {
-        type: Array,
-        minCount: 1,
-      },
-      'images.$': {
-        type: String,
-      },
     });
     // Attach the schema to the collection, so all attempts to insert a document are checked against schema.
     this.collection.attachSchema(this.schema);
