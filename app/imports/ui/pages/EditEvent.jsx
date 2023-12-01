@@ -40,14 +40,13 @@ function Image({ onChange, value }) {
 
 const ImageField = connectField(Image);
 
-/* Renders the EditStuff page for editing a single document. */
+/* Renders the EditEvent page for editing a single document. */
 const EditEvent = () => {
   // Get the documentID from the URL field. See imports/ui/layouts/App.jsx for the route containing :_id.
   const { _id } = useParams();
-  // console.log('EditStuff', _id);
   // useTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
   const { doc, ready } = useTracker(() => {
-    // Get access to Stuff documents.
+    // Get access to Event documents.
     const subscription = Meteor.subscribe(Events.userPublicationName);
     // Determine if the subscription is ready
     const rdy = subscription.ready();
@@ -58,7 +57,6 @@ const EditEvent = () => {
       ready: rdy,
     };
   }, [_id]);
-  // console.log('EditStuff', doc, ready);
   // On successful submit, insert the data.
   const submit = (data) => {
     const { orgName, eventName, location, venue, category, rsvp, startDate, endDate, link, orgEmail } = data;

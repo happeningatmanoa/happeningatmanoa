@@ -59,7 +59,7 @@ function Image({ onChange, value }) {
 
 const ImageField = connectField(Image);
 
-/* Renders the AddStuff page for adding a document. */
+/* Renders the AddEvent page for adding a document. */
 const AddEvent = () => {
   // On submit, insert the data.
   const submit = (data, formRef) => {
