@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, Col, Container, Row } from 'react-bootstrap';
 import { AutoForm, BoolField, DateField, ErrorsField, SelectField, SubmitField, TextField } from 'uniforms-bootstrap5';
 import swal from 'sweetalert';
@@ -32,9 +32,50 @@ const bridge = new SimpleSchema2Bridge(formSchema);
 
 /* Renders the AddStuff page for adding a document. */
 const AddEvent = () => {
+  const [selectedFiles, setSelectedFiles] = useState([]);
+
+  const handleFileChange = (e) => {
+    setSelectedFiles([...e.target.files]);
+  }
+
   // On submit, insert the data.
   const submit = (data, formRef) => {
     const { orgName, eventName, location, venue, category, rsvp, startDate, endDate, link, orgEmail } = data;
+
+    const fileInput = document.getElementById('inputFile');
+    const files = fileInput.files;
+
+    Meteor.call('imageUpload', orgName, eventName, files, (error, imageUrls) => {
+      if (error) {
+        swal('Error', error.message, 'error');
+      } else {
+          const eventData = {
+            orgName,
+            eventName,
+            location,
+            venue,
+            category,
+            rsvp,
+            startDate,
+            endDate,
+            link,
+            orgEmail,
+            images: imageUrls,
+        };
+
+        Events.collection.insert(eventData, (insertError) => {
+          if (insertError) {
+            swal('Error', insertError.message, 'error');
+          } else {
+            swal('Success', 'Event added successfully', 'success');
+            formRef.reset();
+          }
+        });
+      }
+    }
+    );
+
+    /*
     Events.collection.insert(
       { orgName, eventName, location, venue, category, rsvp, startDate, endDate, link, orgEmail },
       (error) => {
@@ -46,6 +87,7 @@ const AddEvent = () => {
         }
       },
     );
+    */
   };
 
   // Render the form. Use Uniforms: https://github.com/vazco/uniforms
@@ -70,6 +112,7 @@ const AddEvent = () => {
                 <DateField name="endDate" />
                 <TextField name="link" placeholder="Link to Event Page" />
                 <TextField name="orgEmail" placeholder="Organization's Contact E-Mail" />
+                <input type="file" id="inputFile" accept="image/png" />
                 <SubmitField value="Submit" />
                 <ErrorsField />
               </Card.Body>
