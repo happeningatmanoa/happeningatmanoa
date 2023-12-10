@@ -25,22 +25,17 @@ const Landing = () => {
       ready: rdy,
     };
   }, []);
+  const random = events[(Math.floor(Math.random() * events.length))];
   return (ready ? (
-
     <div>
       <SelectSearch title="What's Happening in Manoa"/>
-      <Container className="py-3">
-        <Row xs={1} md={2} lg={3} className="g-4">
-          {events.map((event, index) => (<Col key={index}><EventCard event={event} /></Col>))}
-        </Row>
-      </Container>
       <Container className="pb-5">
         <Row className="pt-5 pb-3">
           <Col sm={8}>
             <h2>Browse by Category</h2>
           </Col>
           <Col sm={4} className="justify-content-end text-end">
-            <p>View All (10)</p>
+            <a href="/search">View All (10)</a>
           </Col>
         </Row>
 
@@ -50,7 +45,7 @@ const Landing = () => {
         <Row>
           <Col md={3}>
             <Card style={{ width: '18rem', border: 'none' }}>
-              <Card.Img variant="top" style={{ backgroundColor: 'black', width: '18rem', height: '13rem', borderRadius: '10px' }}/>
+              <a href="/search"><Card.Img variant="top" src="/images/concert.jpg" style={{ width: '18rem', height: '13rem', borderRadius: '10px' }} /></a>
               <Card.Body>
                 <Card.Title><b>MUSIC & CONCERTS</b></Card.Title>
               </Card.Body>
@@ -58,7 +53,7 @@ const Landing = () => {
           </Col>
           <Col md={3}>
             <Card style={{ width: '18rem', border: 'none' }}>
-              <Card.Img variant="top" style={{ backgroundColor: 'black', width: '18rem', height: '13rem', borderRadius: '10px' }}/>
+              <a href="/search"><Card.Img variant="top" src="/images/activities.jpg" style={{ width: '18rem', height: '13rem', borderRadius: '10px' }} /></a>
               <Card.Body>
                 <Card.Title><b>ACTIVITIES</b></Card.Title>
               </Card.Body>
@@ -66,7 +61,7 @@ const Landing = () => {
           </Col>
           <Col md={3}>
             <Card style={{ width: '18rem', border: 'none' }}>
-              <Card.Img variant="top" style={{ backgroundColor: 'black', width: '18rem', height: '13rem', borderRadius: '10px' }}/>
+              <a href="/search"><Card.Img variant="top" src="/images/sports.jpg" style={{ width: '18rem', height: '13rem', borderRadius: '10px' }} /></a>
               <Card.Body>
                 <Card.Title><b>SPORTS</b></Card.Title>
               </Card.Body>
@@ -74,7 +69,7 @@ const Landing = () => {
           </Col>
           <Col md={3}>
             <Card style={{ width: '18rem', border: 'none' }}>
-              <Card.Img variant="top" style={{ backgroundColor: 'black', width: '18rem', height: '13rem', borderRadius: '10px' }}/>
+              <a href="/search"> <Card.Img variant="top" src="/images/educational.jpg" style={{ width: '18rem', height: '13rem', borderRadius: '10px' }} /></a>
               <Card.Body>
                 <Card.Title><b>EDUCATIONAL</b></Card.Title>
               </Card.Body>
@@ -90,13 +85,13 @@ const Landing = () => {
             <h2>Browse by Venue</h2>
           </Col>
           <Col sm={4} className="justify-content-end text-end">
-            <p>View All (10)</p>
+            <a href="/search">View All (10)</a>
           </Col>
         </Row>
         <Row>
           <Col md={3}>
             <Card style={{ width: '18rem', border: 'none' }}>
-              <Card.Img variant="top" style={{ backgroundColor: 'black', width: '18rem', height: '13rem', borderRadius: '10px' }}/>
+              <a href="/search"><Card.Img variant="top" src="/images/campus-center.jpg" style={{ width: '18rem', height: '13rem', borderRadius: '10px' }} /></a>
               <Card.Body>
                 <Card.Title><b>CAMPUS CENTER</b></Card.Title>
               </Card.Body>
@@ -104,7 +99,7 @@ const Landing = () => {
           </Col>
           <Col md={3}>
             <Card style={{ width: '18rem', border: 'none' }}>
-              <Card.Img variant="top" style={{ backgroundColor: 'black', width: '18rem', height: '13rem', borderRadius: '10px' }}/>
+              <a href="/search"><Card.Img variant="top" src="/images/rise-coworking.jpg" style={{ width: '18rem', height: '13rem', borderRadius: '10px' }} /></a>
               <Card.Body>
                 <Card.Title><b>RISE CO-WORKING</b></Card.Title>
               </Card.Body>
@@ -112,7 +107,7 @@ const Landing = () => {
           </Col>
           <Col md={3}>
             <Card style={{ width: '18rem', border: 'none' }}>
-              <Card.Img variant="top" style={{ backgroundColor: 'black', width: '18rem', height: '13rem', borderRadius: '10px' }}/>
+              <a href="/search"><Card.Img variant="top" src="/images/tc-ching-complex.jpg" style={{ width: '18rem', height: '13rem', borderRadius: '10px' }} /></a>
               <Card.Body>
                 <Card.Title><b>T.C CHING FIELD</b></Card.Title>
               </Card.Body>
@@ -120,22 +115,35 @@ const Landing = () => {
           </Col>
           <Col md={3}>
             <Card style={{ width: '18rem', border: 'none' }}>
-              <Card.Img variant="top" style={{ backgroundColor: 'black', width: '18rem', height: '13rem', borderRadius: '10px' }}/>
+              <a href="/search"><Card.Img variant="top" src="/images/shidler.jpg" style={{ width: '18rem', height: '13rem', borderRadius: '10px' }} /></a>
               <Card.Body>
                 <Card.Title><b>SHIDLER COLLEGE OF BUSINESS</b></Card.Title>
               </Card.Body>
             </Card>
           </Col>
         </Row>
-        <Row className="pt-5 pb-3">
-          <h2>Featured Events</h2>
-        </Row>
-        <Row>
-          <div
-            className="p-5 text-center bg-image"
-            style={{ backgroundColor: 'black', height: '30rem', backgroundSize: 'cover', borderRadius: '10px' }}
-          />
-        </Row>
+        {events.length > 0 ? (
+          <div>
+            <Row className="pt-5 pb-3">
+              <h2>Featured Event</h2>
+            </Row>
+            <Row>
+                <div
+                  className="bg-image"
+                  style={{
+                    backgroundColor: 'black',
+                    backgroundImage: random.thumbnail,
+                    height: '30rem',
+                    backgroundSize: 'cover',
+                    borderRadius: '10px',
+                    justifyContent: 'flex-end',
+                  }}
+                >
+                  <EventCard event={random} />
+                </div>
+            </Row>
+          </div>
+        ) : (null)}
       </Container>
     </div>
   ) : <LoadingSpinner/>);

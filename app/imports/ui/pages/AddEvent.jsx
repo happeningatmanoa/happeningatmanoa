@@ -15,7 +15,7 @@ const formSchema = new SimpleSchema({
   venue: String,
   category:  {
     type: String,
-    allowedValues: ['Informational', 'Cultural', 'Job Faire', 'Music', 'Miscellaneous'],
+    allowedValues: ['Educational', 'Sports', 'Activities', 'Cultural', 'Job Faire', 'Music', 'Miscellaneous'],
     defaultValue: 'Miscellaneous',
   },
   rsvp: {

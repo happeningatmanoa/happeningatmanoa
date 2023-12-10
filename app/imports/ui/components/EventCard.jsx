@@ -1,22 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card, Image, ListGroup } from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
 
 /** Renders a single row in the List Stuff table. See pages/ListStuff.jsx. */
 
 const months = ["Jan", "Feb", "March", "April", "May", "June", "July",
   "August", "September", "October", "November", "December"];
 
+//<Card.Img src={event.thumbnail} alt="Card Image" />
 const EventCard = ({ event }) => (
-  <Card className="h-100">
+  <Card style={{ height: '30rem', width: '18rem' }}>
     <Card.Header>
-      <Image src={event.thumbnail} width={75} />
       <Card.Title>{event.eventName}</Card.Title>
       <Card.Subtitle>{event.category}</Card.Subtitle>
     </Card.Header>
     <Card.Body>
       <Card.Text>{months[(event.startDate.getMonth())]}, {event.startDate.getDate()} to {months[(event.endDate.getMonth())]}, {event.endDate.getDate() + 1}</Card.Text>
-      <Card.Text>Ends: {event.startDate.getHours()}:{event.startDate.getMinutes()} (Military Time)</Card.Text>
+      <p>Ends: {event.startDate.getHours()}:{event.startDate.getMinutes()} (Military Time)</p>
       <Card.Text>At: {event.venue}, {event.location}</Card.Text>
       <a href={event.link}>Link to Event</a>
     </Card.Body>

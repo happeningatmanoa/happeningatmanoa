@@ -9,7 +9,7 @@ const SelectSearch = ({ title }) => {
   const [locationSelection, setLocationSelection] = useState([]);
 
   // TODO: pull data from database rather than hardcoded
-  const categoryArray = ['Concerts', 'Sports', 'Activities', 'Educational'];
+  const categoryArray = ['Educational', 'Sports', 'Activities', 'Cultural', 'Job Faire', 'Music', 'Miscellaneous'];
   const locationArray = ['Campus Center', 'RISE Co-Working', 'T.C Ching Field', 'Shidler College of Business'];
 
   return (
