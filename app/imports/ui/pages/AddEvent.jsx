@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, Col, Container, Row } from 'react-bootstrap';
 import { AutoForm, BoolField, DateField, ErrorsField, SelectField, SubmitField, TextField } from 'uniforms-bootstrap5';
 import swal from 'sweetalert';
@@ -22,27 +22,85 @@ const formSchema = new SimpleSchema({
   endDate: String,
   link: String,
   orgEmail: String,
-  
-  /* Insert thumbnail value here when upload implementation exists
-  Insert image value(s) here when upload implementation exists
-   */
+  thumbnail: {
+    type: String,
+    optional: true
+  },
+  images: {
+    type: Array,
+    optional: true
+  },
+  'images.$': String,
 });
 
 const bridge = new SimpleSchema2Bridge(formSchema);
 
 /* Renders the AddStuff page for adding a document. */
 const AddEvent = () => {
+
+  const [images, setImages] = useState([]);
+  const [thumbnail, setThumbnail] = useState('');
+
+  const uploadImage = async (e) => {
+    const file = e.target.files;
+    let convertedImages = [];
+    for (let i = 0; i < file.length; i++) {
+      if (!file[i].type === 'image/png' || file[i].type === 'image/jpeg') {
+        swal('Error', 'Please upload a png or jpeg file', 'error');
+        return;
+      }
+      const base64 = await convertBase64(file[i]);
+      convertedImages.push(base64);
+    }
+    setImages(convertedImages);
+    //console.log("base64", convertedImages);
+  }
+
+  const uploadThumbnail = async (e) => {
+    const file = e.target.files[0];
+    const base64 = await convertBase64(file);
+    setThumbnail(base64);
+    //console.log("base64", base64);
+  }
+
+  const convertBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+
+      fileReader.onload = () => {
+        resolve(fileReader.result);
+      };
+
+      fileReader.onerror = (error) => {
+        reject(error);
+      };
+    });
+  };
+
   // On submit, insert the data.
   const submit = (data, formRef) => {
-    const { orgName, eventName, location, venue, category, rsvp, startDate, endDate, link, orgEmail } = data;
+    const { orgName, eventName, location, venue, category, rsvp, startDate, endDate, link, orgEmail} = data;
+    const imagesData = images;
+    const thumbnailData = thumbnail;
+
+    if (!Array.isArray(imagesData) || imagesData.length === 0) {
+      swal('Error', 'Please upload at least one image', 'error');
+      return;
+    } else if (thumbnailData === '') {
+      swal('Error', 'Please upload a thumbnail', 'error');
+      return;
+    }
+
     Events.collection.insert(
-      { orgName, eventName, location, venue, category, rsvp, startDate, endDate, link, orgEmail },
+      { orgName, eventName, location, venue, category, rsvp, startDate, endDate, link, orgEmail, images: imagesData, thumbnail: thumbnailData },
       (error) => {
         if (error) {
           swal('Error', error.message, 'error');
         } else {
           swal('Success', 'Event added successfully', 'success');
           formRef.reset();
+          setImages([]);
         }
       },
     );
@@ -70,6 +128,23 @@ const AddEvent = () => {
                 <DateField name="endDate" />
                 <TextField name="link" placeholder="Link to Event Page" />
                 <TextField name="orgEmail" placeholder="Organization's Contact E-Mail" />
+                <label>Upload Thumbnail</label>
+                <input
+                  type="file"
+                  onChange={(e) => {
+                    uploadThumbnail(e);
+                  }}
+                  accept="image/png, image/jpeg"
+                />
+                <label>Upload Images</label>
+                <input
+                    type="file"
+                    onChange={(e) => {
+                      uploadImage(e);
+                    }}
+                    accept="image/png, image/jpeg"
+                    multiple
+                />
                 <SubmitField value="Submit" />
                 <ErrorsField />
               </Card.Body>
