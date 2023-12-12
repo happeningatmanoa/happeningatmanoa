@@ -26,7 +26,7 @@ const NavBar = () => {
               <Nav.Link id="myevents-nav" as={NavLink} to="/myevents" key="myevent">MyEvents</Nav.Link>,
             ]) : (
               <Nav.Link id="myevents-nav" as={NavLink} to="/signin" key="myevent">MyEvents</Nav.Link>
-            )}me
+            )}
             <Nav.Link id="contact-nav" as={NavLink} to="/contact" key="contact">Contact Us</Nav.Link>
           </Nav>
         </Navbar.Collapse>

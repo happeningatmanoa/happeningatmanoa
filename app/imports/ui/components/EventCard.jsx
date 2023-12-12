@@ -2,12 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Card } from 'react-bootstrap';
 
-/** Renders a single row in the List Stuff table. See pages/ListStuff.jsx. */
+const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July',
+  'August', 'September', 'October', 'November', 'December'];
 
-const months = ["Jan", "Feb", "March", "April", "May", "June", "July",
-  "August", "September", "October", "November", "December"];
-
-//<Card.Img src={event.thumbnail} alt="Card Image" />
+// <Card.Img src={event.thumbnail} alt="Card Image" />
 const EventCard = ({ event }) => (
   <Card style={{ height: '30rem', width: '18rem' }}>
     <Card.Header>
