@@ -41,6 +41,9 @@ const Search = () => {
   const [filters, setFilters] = useState({ orgName: '', eventName: '', location: '', venue: '', category: '', rsvp: null, startDate: null, endDate: null, link: '', orgEmail: '', images: '' });
   const [data, setData] = useState(events);
 
+  const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July',
+    'August', 'September', 'October', 'November', 'December'];
+  
   const handleFilterChange = (name, value, type) => {
     if (type === 'text' || type === 'date') {
       setFilters((prevFilters) => ({
@@ -198,13 +201,16 @@ const Search = () => {
       <Row className="mt-4">
         {data.map((item, index) => (
           <Col key={index} sm={6} md={4} lg={6} className="mb-4">
-            <Card className="h-100 shadow grow-on-hover">
-              <Card.Body style={{ color: 'black' }}>
-                <Card.Title><h1>{item.eventName}</h1></Card.Title>
-                <Card.Text>
-                  <h3>{item.orgName}</h3>
-                  event info goes here
-                </Card.Text>
+            <Card style={{ height: '30rem', width: '18rem' }}>
+              <Card.Header>
+                <Card.Title>{item.eventName}</Card.Title>
+                <Card.Subtitle>{item.category}</Card.Subtitle>
+              </Card.Header>
+              <Card.Body>
+                <Card.Text>{months[(item.startDate.getMonth())]}, {item.startDate.getDate()} to {months[(item.endDate.getMonth())]}, {item.endDate.getDate() + 1}</Card.Text>
+                <p>Ends: {item.startDate.getHours()}:{item.startDate.getMinutes()} (Military Time)</p>
+                <Card.Text>At: {item.venue}, {item.location}</Card.Text>
+                <a href={item.link}>Link to Event</a>
               </Card.Body>
             </Card>
           </Col>
