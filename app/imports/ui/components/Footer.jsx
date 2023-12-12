@@ -28,7 +28,7 @@ const Footer = () => (
           <br />
           <a href="https://www.github.com/happeningatmanoa" style={{ textDecoration: 'none', color: 'inherit' }}>Github</a>
           <br />
-          <a href="https://www.happeningatmanoa.github.io" style={{ textDecoration: 'none', color: 'inherit' }}>About Us</a>
+          <a href="/about" style={{ textDecoration: 'none', color: 'inherit' }}>About Us</a>
           <br />
           <a href="/contactus" style={{ textDecoration: 'none', color: 'inherit' }}>Contact Us</a>
         </Col>

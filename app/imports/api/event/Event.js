@@ -18,7 +18,7 @@ class EventsCollection {
       venue: String,
       category: {
         type: String,
-        allowedValues: ['Informational', 'Cultural', 'Job Faire', 'Music', 'Miscellaneous'],
+        allowedValues: ['Educational', 'Sports', 'Activities', 'Cultural', 'Job Faire', 'Music', 'Miscellaneous'],
         defaultValue: 'Miscellaneous',
       },
       rsvp: Boolean,
@@ -27,11 +27,11 @@ class EventsCollection {
       link: String,
       orgEmail: String,
       thumbnail: String,
-      images: {
+      rsvpList: {
         type: Array,
-        minCount: 1,
+        minCount: 0,
       },
-      'images.$': {
+      'rsvpList.$': {
         type: String,
       },
     });
