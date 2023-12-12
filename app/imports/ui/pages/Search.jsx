@@ -43,7 +43,7 @@ const Search = () => {
 
   const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July',
     'August', 'September', 'October', 'November', 'December'];
-  
+
   const handleFilterChange = (name, value, type) => {
     if (type === 'text' || type === 'date') {
       setFilters((prevFilters) => ({
@@ -200,7 +200,7 @@ const Search = () => {
       </Form>
       <Row className="mt-4">
         {data.map((item, index) => (
-          <Col key={index} sm={6} md={4} lg={6} className="mb-4">
+          <Col key={index} sm={1} md={2} lg={3} className="mb-4">
             <Card style={{ height: '30rem', width: '18rem' }}>
               <Card.Header>
                 <Card.Title>{item.eventName}</Card.Title>
