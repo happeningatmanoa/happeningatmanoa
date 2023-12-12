@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { Typeahead } from 'react-bootstrap-typeahead';
+import { useLocation } from 'react-router-dom';
 import { Meteor } from 'meteor/meteor';
 import { Col, Container, Row, Form, Card, Button } from 'react-bootstrap';
 import { useTracker } from 'meteor/react-meteor-data';
@@ -7,28 +9,69 @@ import LoadingSpinner from '../components/LoadingSpinner';
 
 /* Renders a table containing all of the Stuff documents. Use <StuffItem> to render each row. */
 const Search = () => {
+  const { search } = useLocation();
+  const queryParams = new URLSearchParams(search);
+  const categoryParam = queryParams.get('category');
+  const locationParam = queryParams.get('location');
+  const [categorySelection, setCategorySelection] = useState([]);
+  const [locationSelection, setLocationSelection] = useState([]);
+  const [venueSelection, setVenueSelection] = useState([]);
+
   // useTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
   const { ready, events } = useTracker(() => {
-    // Note that this subscription will get cleaned up
-    // when your component is unmounted or deps change.
-    // Get access to Stuff documents.
     const subscription = Meteor.subscribe(Events.userPublicationName);
-    // Determine if the subscription is ready
     const rdy = subscription.ready();
-    // Get the Stuff documents
-    const eventItems = Events.collection.find({}).fetch();
+
+    let eventItems = Events.collection.find({}).fetch();
+
+    if (categoryParam) {
+      eventItems = eventItems.filter(item => item.category === categoryParam);
+    }
+
+    if (locationParam) {
+      eventItems = eventItems.filter(item => item.location === locationParam);
+    }
+
     return {
       events: eventItems,
       ready: rdy,
     };
-  }, []);
+  }, [categoryParam, locationParam]);
 
   const [filters, setFilters] = useState({ orgName: '', eventName: '', location: '', venue: '', category: '', rsvp: null, startDate: null, endDate: null, link: '', orgEmail: '', images: '' });
   const [data, setData] = useState(events);
 
-  const handleFilterChange = (e) => {
-    const { name, value } = e.target;
-    setFilters({ ...filters, [name]: value });
+  const handleFilterChange = (name, value, type) => {
+    if (type === 'text' || type === 'date') {
+      setFilters((prevFilters) => ({
+        ...prevFilters,
+        [name]: value,
+      }));
+    } else if (type === 'category') {
+      setFilters((prevFilters) => ({
+        ...prevFilters,
+        [name]: value.length > 0 ? value[0] : '',
+      }));
+    }
+  };
+
+  const handleTypeaheadChange = (name, selected) => {
+    switch (name) {
+    case 'location':
+      setLocationSelection(selected);
+      handleFilterChange(name, selected, 'category');
+      break;
+    case 'venue':
+      setVenueSelection(selected);
+      handleFilterChange(name, selected, 'category');
+      break;
+    case 'category':
+      setCategorySelection(selected);
+      handleFilterChange(name, selected, 'category');
+      break;
+    default:
+      break;
+    }
   };
 
   const applyFilters = () => {
@@ -39,18 +82,33 @@ const Search = () => {
         filteredData = filteredData.filter(item => item[key].toLowerCase().includes(filters[key].toLowerCase()));
       }
     });
-
     setData(filteredData);
   };
 
   useEffect(() => {
-    // Apply filters when the data is ready
     if (ready) {
+      // Apply filters when the data is ready
       applyFilters();
     }
-  }, [ready, filters, events]);
+  }, [ready, filters, events, categoryParam, locationParam]);
   const resetFilters = () => {
-    setFilters({ orgName: '', eventName: '', location: '', venue: '', category: '', rsvp: null, startDate: null, endDate: null, link: '', orgEmail: '', images: '' });
+    setFilters({
+      orgName: '',
+      eventName: '',
+      location: '',
+      venue: '',
+      category: '',
+      rsvp: null,
+      startDate: null,
+      endDate: null,
+      link: '',
+      orgEmail: '',
+      images: '',
+    });
+
+    setCategorySelection([]);
+    setLocationSelection([]);
+    setVenueSelection([]);
     setData(events);
   };
 
@@ -69,7 +127,7 @@ const Search = () => {
                 name="eventName"
                 placeholder="Event Name"
                 value={filters.eventName}
-                onChange={handleFilterChange}
+                onChange={(e) => handleFilterChange(e.target.name, e.target.value, 'text')}
               />
             </Form.Group>
           </Col>
@@ -81,41 +139,47 @@ const Search = () => {
                 name="orgName"
                 placeholder="Organization"
                 value={filters.orgName}
-                onChange={handleFilterChange}
+                onChange={(e) => handleFilterChange(e.target.name, e.target.value, 'text')}
               />
             </Form.Group>
           </Col>
         </Row>
         <Row>
           <Col>
-            <Form.Select className="mt-2">
-              <option>Location</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
-            </Form.Select>
+            <Typeahead
+              className="mt-2"
+              name="location"
+              type="category"
+              onChange={(selected) => handleTypeaheadChange('location', selected)}
+              options={['Campus Center', 'RISE Co-Working', 'T.C Ching Field', 'Shidler College of Business']}
+              placeholder="Select a location..."
+              selected={locationSelection}
+              value={locationSelection}
+            />
           </Col>
           <Col>
-            <Form.Select className="mt-2">
-              <option>Venue</option>
-              <option value="1">On-Campus</option>
-              <option value="2">Off-Campus</option>
-            </Form.Select>
+            <Typeahead
+              className="mt-2"
+              name="venue"
+              type="category"
+              onChange={(selected) => handleTypeaheadChange('venue', selected)}
+              options={['On-Campus', 'Off-Campus', 'Online']}
+              placeholder="Select a venue..."
+              selected={venueSelection}
+              value={venueSelection}
+            />
           </Col>
           <Col>
-            <Form.Select
+            <Typeahead
               className="mt-2"
               name="category"
-              value={filters.category}
-              onChange={handleFilterChange}
-            >
-              <option>Category</option>
-              <option value="1">Informational</option>
-              <option value="2">Cultural</option>
-              <option value="3">Job Faire</option>
-              <option value="3">Music</option>
-              <option value="3">Miscellaneous</option>
-            </Form.Select>
+              type="category"
+              onChange={(selected) => handleTypeaheadChange('category', selected)}
+              options={['Informational', 'Sports', 'Activities', 'Educational']}
+              placeholder="Select a category..."
+              selected={categorySelection}
+              value={categorySelection}
+            />
           </Col>
           <Col>
             <Form.Control
@@ -123,7 +187,7 @@ const Search = () => {
               type="date"
               name="startDate"
               value={filters.startDate}
-              onChange={handleFilterChange}
+              onChange={(e) => handleFilterChange(e.target.name, e.target.value, 'date')}
             />
           </Col>
         </Row>

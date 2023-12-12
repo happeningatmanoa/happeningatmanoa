@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Col, Form, Row, Button } from 'react-bootstrap';
 import { Typeahead } from 'react-bootstrap-typeahead';
+import { Link } from 'react-router-dom';
 
 // component for the Search feature header
 // TODO: add search functionality via GET call to database
@@ -9,7 +10,7 @@ const SelectSearch = ({ title }) => {
   const [locationSelection, setLocationSelection] = useState([]);
 
   // TODO: pull data from database rather than hardcoded
-  const categoryArray = ['Concerts', 'Sports', 'Activities', 'Educational'];
+  const categoryArray = ['Music', 'Sports', 'Activities', 'Informational'];
   const locationArray = ['Campus Center', 'RISE Co-Working', 'T.C Ching Field', 'Shidler College of Business'];
 
   return (
@@ -47,7 +48,9 @@ const SelectSearch = ({ title }) => {
               </Form.Group>
             </Col>
             <Col sm={1} className="pr-5">
-              <Button variant="primary" type="submit">Search</Button>
+              <Link to={`/search?category=${categorySelection}&location=${locationSelection}`}>
+                <Button variant="primary" type="submit">Search</Button>
+              </Link>
             </Col>
           </Row>
         </div>
