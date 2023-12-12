@@ -22,14 +22,14 @@ const Search = () => {
     const subscription = Meteor.subscribe(Events.userPublicationName);
     const rdy = subscription.ready();
 
-    let eventItems = Events.collection.find({}).fetch();
+    const eventItems = Events.collection.find({}).fetch();
 
     if (categoryParam) {
-      eventItems = eventItems.filter(item => item.category === categoryParam);
+      setCategorySelection([categoryParam]);
     }
 
     if (locationParam) {
-      eventItems = eventItems.filter(item => item.location === locationParam);
+      setLocationSelection([locationParam]);
     }
 
     return {
@@ -87,6 +87,8 @@ const Search = () => {
 
   useEffect(() => {
     if (ready) {
+      handleTypeaheadChange('location', locationSelection);
+      handleTypeaheadChange('category', categorySelection);
       // Apply filters when the data is ready
       applyFilters();
     }
